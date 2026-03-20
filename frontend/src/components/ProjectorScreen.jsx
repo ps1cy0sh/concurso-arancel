@@ -141,7 +141,7 @@ export default function ProjectorScreen({ gameState }) {
 
     const fetchTeams = async () => {
         try {
-            const res = await fetch('http://localhost:3001/api/teams');
+            const res = await fetch('https://concurso-arancel.onrender.com/api/teams');
             const data = await res.json();
             setTeams(data);
         } catch (error) {
