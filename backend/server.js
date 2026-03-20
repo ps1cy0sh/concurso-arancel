@@ -20,8 +20,20 @@ const io = new Server(server, {
 let countdownInterval = null;
 let ronda4Timer = null;
 
+process.on('uncaughtException', (err) => {
+    console.error('ERROR CRITICO:', err.message);
+    console.error(err.stack);
+    process.exit(1);
+});
+
 const dbPath = path.join(__dirname, 'database.sqlite');
-const db = new sqlite3.Database(dbPath);
+const db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+        console.error('ERROR abriendo base de datos:', err.message);
+        process.exit(1);
+    }
+    console.log('Base de datos abierta en:', dbPath);
+});
 
 // Initialize DB schema
 db.serialize(() => {
